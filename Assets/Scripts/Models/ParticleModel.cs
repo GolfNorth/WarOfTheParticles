@@ -10,6 +10,7 @@ namespace WarOfTheParticles
         private readonly MeshRenderer _meshRenderer;
         private readonly ParticleSystem _particleSystem;
         private readonly ParticleSettings _particleSettings;
+        private readonly TrailRenderer _trailRenderer;
         private bool _active;
         private float _speed;
         private float _radius;
@@ -25,6 +26,7 @@ namespace WarOfTheParticles
             {
                 _active = value;
                 _meshRenderer.enabled = value;
+                _trailRenderer.enabled = value;
                 if (!value) _particleSystem.Play();
             }
         }
@@ -42,6 +44,12 @@ namespace WarOfTheParticles
 
                 var scale = _radius * 2;
                 _transform.localScale = new Vector3(scale, scale, scale);
+                
+                var widthCurve = new AnimationCurve();
+                widthCurve.AddKey(0, scale);
+                widthCurve.AddKey(1, 0);
+
+                _trailRenderer.widthCurve = widthCurve;
             }
         }
 
@@ -59,6 +67,7 @@ namespace WarOfTheParticles
             _collider = _gameObject.GetComponent<CircleCollider2D>();
             _meshRenderer = _gameObject.GetComponent<MeshRenderer>();
             _particleSystem = _gameObject.GetComponent<ParticleSystem>();
+            _trailRenderer = _gameObject.GetComponent<TrailRenderer>();
         }
     }
 }
