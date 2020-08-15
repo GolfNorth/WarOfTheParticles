@@ -45,8 +45,9 @@ namespace WarOfTheParticles
         {
             _gameState = GameState.Ended;
             
-            Debug.Log(_gameState);
             RoundEnded?.Invoke();
+            
+            Start();
         }
 
         public void GameOver()
@@ -54,7 +55,6 @@ namespace WarOfTheParticles
             _round = 0;
             _gameState = GameState.GameOver;
             
-            Debug.Log(_gameState);
             RoundGameOver?.Invoke();
         }
 
@@ -63,7 +63,6 @@ namespace WarOfTheParticles
             _round++;
             _gameState = GameState.Countdown;
             
-            Debug.Log(_gameState);
             RoundCountdown?.Invoke();
 
             while (_countdown > 0)
@@ -74,8 +73,7 @@ namespace WarOfTheParticles
             }
 
             _gameState = GameState.Started;
-
-            Debug.Log(_gameState);
+            
             RoundStarted?.Invoke();
         }
     }

@@ -13,6 +13,7 @@ namespace WarOfTheParticles
         private BoundsManager _boundsManager;
         private CursorManager _cursorManager;
         private ParticlesManager _particlesManager;
+        private ScoreManager _scoreManager;
 
         public Camera Camera => camera;
 
@@ -32,6 +33,8 @@ namespace WarOfTheParticles
 
         public ParticlesManager ParticlesManager => _particlesManager;
 
+        public ScoreManager ScoreManager => _scoreManager;
+
         private void Awake()
         {
             _updateManager = new UpdateManager();
@@ -39,6 +42,7 @@ namespace WarOfTheParticles
             _boundsManager = new BoundsManager();
             _cursorManager = new CursorManager();
             _particlesManager = new ParticlesManager();
+            _scoreManager = new ScoreManager();
         }
     }
 }

@@ -4,12 +4,13 @@ using Random = UnityEngine.Random;
 
 namespace WarOfTheParticles
 {
-    public sealed class ParticlesManager
+    public sealed class ParticlesManager : ITickable
     {
         private readonly ObjectPool<ParticleController> _particlesPool;
         private readonly RoundManager _roundManager;
         private readonly BoundsManager _boundsManager;
         private readonly RoundSettings _roundSettings;
+        private readonly UpdateManager _updateManager;
         private readonly Array _bounds;
         private readonly System.Random _intRandom;
 
@@ -28,10 +29,13 @@ namespace WarOfTheParticles
             _roundManager.RoundEnded += OnRoundEndedOrGameOver;
             _roundManager.RoundGameOver += OnRoundEndedOrGameOver;
             _boundsManager = SceneContext.Instance.BoundsManager;
+            _updateManager = SceneContext.Instance.UpdateManager;
+            _updateManager.Add(this);
         }
 
         public void Dispose()
         {
+            _updateManager.Remove(this);
             _roundManager.RoundStarted -= OnRoundStarted;
             _roundManager.RoundEnded -= OnRoundEndedOrGameOver;
             _roundManager.RoundGameOver -= OnRoundEndedOrGameOver;
@@ -95,6 +99,13 @@ namespace WarOfTheParticles
             foreach (var controller in _particlesPool.All)
                 if (controller.IsEnabled)
                     _particlesPool.Release(controller);
+        }
+
+        public void Tick()
+        {
+            if (_roundManager.GameState != GameState.Started || _particlesPool.Count > 0) return;
+            
+            _roundManager.End();
         }
     }
 }
