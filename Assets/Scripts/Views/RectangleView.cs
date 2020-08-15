@@ -6,7 +6,7 @@ namespace WarOfTheParticles
     {
         private void Awake()
         {
-            controller = new RectangleController();
+            controller = new RectangleController(this);
         }
 
         private void OnMouseOver()
