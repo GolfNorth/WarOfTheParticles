@@ -62,6 +62,8 @@ namespace WarOfTheParticles
 
         public void DestroyCursor()
         {
+            if (!_model.Active) return;
+            
             _cursorManager.Destroy();
         }
 
