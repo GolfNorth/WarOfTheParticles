@@ -43,6 +43,8 @@ namespace WarOfTheParticles
 
         public void End()
         {
+            if (_gameState == GameState.Ended) return;
+            
             _gameState = GameState.Ended;
             
             RoundEnded?.Invoke();
@@ -52,6 +54,8 @@ namespace WarOfTheParticles
 
         public void GameOver()
         {
+            if (_gameState == GameState.GameOver) return;
+            
             _round = 0;
             _gameState = GameState.GameOver;
             
